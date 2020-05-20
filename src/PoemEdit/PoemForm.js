@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import {useHistory} from 'react-router'
 
 export const PoemForm = (props) => {
-    
+    let history = useHistory()
+    console.log(props)
     const { poem } = props
 
     const [formValues, setFormValues] = useState({
@@ -20,6 +22,9 @@ export const PoemForm = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formValues)
+        })
+        .then( () => {
+            history.push(`/poems/${poem.id}`)
         })
     }
 

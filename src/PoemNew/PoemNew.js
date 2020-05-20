@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import {useHistory} from 'react-router'
 
 export const PoemNew = function () {
 
+    let history = useHistory()
     let [formValues, setState] = useState({
         name: '',
         content: ''
@@ -19,6 +21,10 @@ export const PoemNew = function () {
             },
             body: JSON.stringify(formValues)
         })
+        .then( () => {
+            history.push('/poems')
+        })
+         
     }
 
     return (
@@ -32,7 +38,8 @@ export const PoemNew = function () {
                 <label>Content:</label>
                 <textarea value={formValues.content} onChange={setContent} />
             </div>
-            <button className="ui green button" onClick={handleSubmit} >Create</button>
+            <button className="ui green button" onClick={handleSubmit}>Create</button>
+            {/* <button onClick={() => history.push('/poems')}>back to poem list</button> */}
         </div>
     )
 }

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router'
 
 export function PoemShow(){
     let [ poem, setPoem ] = useState(null)
+    let params = useParams()
+    // console.log(params)
+    let selectedPoemId = params.id // How can we get this from params instead of hard coding?
 
-    let selectedPoemId = 1 // How can we get this from params instead of hard coding?
-
+   let history = useHistory()
     useEffect(() => {
         fetch(`http://localhost:3000/poems/${selectedPoemId}`)
             .then( res => res.json())
@@ -21,6 +24,7 @@ export function PoemShow(){
         })
             .then( () => {
                 // How could we send the user to the PoemIndex page?
+                history.push('/poems')
             })
     }
 
@@ -34,7 +38,7 @@ export function PoemShow(){
             </div>
             <div className="content">
                 <button className="ui red button" onClick={handleDelete}>Delete</button>
-                <button className="ui green button">Edit</button>
+                <button className="ui green button" onClick={() => history.push(`/edit/${selectedPoemId}`)}>Edit</button>
             </div>
         </div>
     )
